@@ -54,6 +54,7 @@
     git
     fastfetch
     nh
+    rm-improved
   ];
 
   services.openssh = {

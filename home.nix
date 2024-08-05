@@ -28,12 +28,12 @@
       zsh = {
         enable = true;
         antidote = {
-          enable = false;
+          enable = true;
           plugins =
             [ "zsh-users/zsh-autosuggestions" "zsh-users/zsh-completions" ];
         };
         prezto = {
-          enable = true;
+          enable = false;
           pmodules = [
             "environment"
             "terminal"
@@ -82,9 +82,7 @@
     # plain files is through 'home.file'.
 
     # if you don't want to manage your shell through Home Manager.
-    home.sessionVariables = {
-      # EDITOR = "emacs";
-    };
+    home.sessionVariables = { EDITOR = "micro"; };
 
     # Let Home Manager install and manage itself.
     # programs.home-manager.enable = true;
