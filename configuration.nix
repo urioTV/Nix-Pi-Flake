@@ -16,10 +16,8 @@
   # Enables the generation of /boot/extlinux/extlinux.conf
   # boot.loader.generic-extlinux-compatible.enable = true;
 
-
   # !!! Set to specific linux kernel version
   # boot.kernelPackages = pkgs.linuxPackages_rpi3;
-
 
   # Disable ZFS on kernel 6
   # boot.supportedFilesystems = lib.mkForce [ "vfat" "xfs" "cifs" "ntfs" ];
@@ -38,10 +36,16 @@
   };
 
   # !!! Adding a swap file is optional, but strongly recommended!
-  swapDevices = [ { device = "/swapfile"; size = 8192; } ];
+  swapDevices = [{
+    device = "/swapfile";
+    size = 8192;
+  }];
 
-  zramSwap.enable = true;
-  zramSwap.memoryPercent = 80;
+  zramSwap = {
+    enable = true;
+    memoryPercent = 75;
+    algorithm = "lzo";
+  };
 
   # systemPackages
   environment.systemPackages = with pkgs; [
@@ -50,11 +54,14 @@
     micro
     bind
     iptables
-    docker-compose
     git
     fastfetch
     nh
     rm-improved
+    dust
+    podman-compose
+    podman-tui
+    gping
   ];
 
   services.openssh = {
@@ -64,16 +71,19 @@
 
   services.resolved.enable = true;
 
-
   programs.zsh = { enable = true; };
 
-  virtualisation.docker.enable = true;
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+  };
 
-  networking.firewall.enable = false;
+  networking.firewall.enable = true;
+
+  networking.useDHCP = lib.mkForce true;
 
   hardware.enableRedistributableFirmware = true;
   networking.wireless.enable = true;
-
 
   # put your own configuration here, for example ssh keys:
   users.defaultUserShell = pkgs.zsh;

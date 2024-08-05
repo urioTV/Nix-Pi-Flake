@@ -28,12 +28,12 @@
       zsh = {
         enable = true;
         antidote = {
-          enable = true;
+          enable = false;
           plugins =
             [ "zsh-users/zsh-autosuggestions" "zsh-users/zsh-completions" ];
         };
         prezto = {
-          enable = false;
+          enable = true;
           pmodules = [
             "environment"
             "terminal"
@@ -48,6 +48,7 @@
             "git"
           ];
         };
+        shellAliases = { nix = "noglob nix"; };
 
       };
       eza = { enable = true; };

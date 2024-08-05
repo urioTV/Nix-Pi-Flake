@@ -9,7 +9,8 @@
 
   };
 
-  outputs = { self, nixpkgs, home-manager, raspberry-pi-nix, ... }@inputs:
+  outputs =
+    { self, nixpkgs, home-manager, raspberry-pi-nix, ... }@inputs:
     let
       lib = nixpkgs.lib;
       system = "aarch64-linux";
@@ -35,20 +36,13 @@
             {
               sdImage.compressImage = false;
               raspberry-pi-nix.board = "bcm2711";
-              nix.trustedUsers = [ "@wheel" ];
+              nix.settings.trusted-users = [ "@wheel" ];
             }
             ./configuration.nix
             ./home.nix
             raspberry-pi-nix.nixosModules.raspberry-pi
             home-manager.nixosModules.home-manager
           ];
-        };
-      };
-      homeConfigurations = {
-        nixos = home-manager.lib.homeManagerConfiguration {
-          extraSpecialArgs = { inherit inputs; };
-          inherit pkgs;
-          modules = [ { nixpkgs.overlays = [ customOverlay ]; } ./home.nix ];
         };
       };
     };
