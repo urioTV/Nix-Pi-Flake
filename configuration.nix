@@ -38,7 +38,7 @@
   };
 
   # !!! Adding a swap file is optional, but strongly recommended!
-  swapDevices = [ { device = "/swapfile"; size = 4096; } ];
+  swapDevices = [ { device = "/swapfile"; size = 8192; } ];
 
   zramSwap.enable = true;
   zramSwap.memoryPercent = 80;

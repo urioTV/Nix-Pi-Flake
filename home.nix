@@ -27,11 +27,25 @@
       };
       zsh = {
         enable = true;
-        zplug = {
+        antidote = {
+          enable = false;
+          plugins =
+            [ "zsh-users/zsh-autosuggestions" "zsh-users/zsh-completions" ];
+        };
+        prezto = {
           enable = true;
-          plugins = [
-            { name = "zsh-users/zsh-autosuggestions"; }
-            { name = "zsh-users/zsh-completions"; }
+          pmodules = [
+            "environment"
+            "terminal"
+            "editor"
+            "history"
+            "directory"
+            "spectrum"
+            "utility"
+            "completion"
+            "prompt"
+            "autosuggestions"
+            "git"
           ];
         };
 
