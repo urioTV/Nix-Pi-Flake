@@ -78,7 +78,7 @@
     dockerCompat = true;
   };
 
-  networking.firewall.enable = true;
+  networking.firewall.enable = false;
 
   networking.useDHCP = lib.mkForce true;
 
