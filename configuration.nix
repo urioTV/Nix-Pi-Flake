@@ -17,7 +17,7 @@
   # boot.loader.generic-extlinux-compatible.enable = true;
 
   # !!! Set to specific linux kernel version
-  # boot.kernelPackages = pkgs.linuxPackages_rpi3;
+  # boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
 
   # Disable ZFS on kernel 6
   # boot.supportedFilesystems = lib.mkForce [ "vfat" "xfs" "cifs" "ntfs" ];
