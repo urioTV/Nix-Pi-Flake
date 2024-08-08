@@ -45,14 +45,21 @@
               # Flakes
               nix.settings.experimental-features = [ "nix-command" "flakes" ];
               nixpkgs.config.allowUnfree = true;
-            }
-            {
+
               sdImage.compressImage = false;
               raspberry-pi-nix.board = "bcm2711";
               nix.settings.trusted-users = [ "@wheel" ];
             }
             ./configuration.nix
-            ./home.nix
+            {
+              home-manager.backupFileExtension = "backupNix";
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.useUserService = true;
+              home-manager.users.nixos = {
+                imports = [ ./home.nix ];
+              };
+            }
             raspberry-pi-nix.nixosModules.raspberry-pi
             home-manager.nixosModules.home-manager
           ];
