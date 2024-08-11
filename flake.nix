@@ -34,31 +34,22 @@
           specialArgs = { inherit inputs; };
           inherit system;
           modules = [
-            { nixpkgs.overlays = [ customOverlay ]; }
             {
-              nix.settings = {
-                substituters = [ "https://nix-community.cachix.org" ];
-                trusted-public-keys = [
-                  "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-                ];
-              };
-              # Flakes
-              nix.settings.experimental-features = [ "nix-command" "flakes" ];
+              nixpkgs.overlays = [ customOverlay ];
               nixpkgs.config.allowUnfree = true;
-
+            }
+            {
               sdImage.compressImage = false;
               raspberry-pi-nix.board = "bcm2711";
-              nix.settings.trusted-users = [ "@wheel" ];
             }
             ./configuration.nix
+            ./nix-settings.nix
             {
               home-manager.backupFileExtension = "backupNix";
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.useUserService = true;
-              home-manager.users.nixos = {
-                imports = [ ./home.nix ];
-              };
+              home-manager.users.nixos = { imports = [ ./home.nix ]; };
             }
             raspberry-pi-nix.nixosModules.raspberry-pi
             home-manager.nixosModules.home-manager
