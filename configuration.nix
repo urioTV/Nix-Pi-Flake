@@ -82,15 +82,15 @@
   users.groups = {
     nixos = {
       gid = 1000;
-      name = "nixos";
+      name = "urio";
     };
   };
   users.users = {
-    nixos = {
+    urio = {
       uid = 1000;
-      home = "/home/nixos";
-      name = "nixos";
-      group = "nixos";
+      home = "/home/urio";
+      name = "urio";
+      group = "urio";
       shell = pkgs.zsh;
       extraGroups = [ "wheel" "docker" ];
       isNormalUser = true;
@@ -100,7 +100,7 @@
     # This is my public key
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDRfYCXQz7XXM9pupEpNw949Yh2fuMvfJouJZi6+HOIH urio@konrad-m18"
   ];
-  users.users.nixos.openssh.authorizedKeys.keys = [
+  users.users.urio.openssh.authorizedKeys.keys = [
     # This is my public key
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDRfYCXQz7XXM9pupEpNw949Yh2fuMvfJouJZi6+HOIH urio@konrad-m18"
   ];

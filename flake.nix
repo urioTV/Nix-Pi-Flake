@@ -8,7 +8,7 @@
 
   };
 
-  outputs = { self, nixpkgs, home-manager, raspberry-pi-nix, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       lib = nixpkgs.lib;
       system = "x86_64-linux";
@@ -44,7 +44,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.useUserService = true;
-              home-manager.users.nixos = { imports = [ ./home.nix ]; };
+              home-manager.users.urio = { imports = [ ./home.nix ]; };
             }
             home-manager.nixosModules.home-manager
           ];
