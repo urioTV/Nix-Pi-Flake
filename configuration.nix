@@ -61,6 +61,7 @@
     enable = true;
     settings.PermitRootLogin = "yes";
   };
+  services.qemuGuest.enable = true;
 
   services.resolved.enable = true;
 
