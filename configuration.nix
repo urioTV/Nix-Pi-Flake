@@ -73,8 +73,19 @@
 
   networking.firewall.enable = true;
 
-  networking.useDHCP = lib.mkForce true;
+  networking.interfaces.ens18.ipv4.addresses = [
+    {
+      address = "10.21.37.117";
+      prefixLength = 24;
+    }
+  ];
+  networking.defaultGateway = {
+    address = "10.21.37.1";
+    interface = "ens18";
+  };
+  networking.enableIPv6 = false;
 
+  
   hardware.enableRedistributableFirmware = true;
 
   # put your own configuration here, for example ssh keys:
