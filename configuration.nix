@@ -9,42 +9,36 @@
     # ./hardware-configuration.nix
   ];
 
-  networking.hostName = "konrad-nixpi";
+  networking.hostName = "konrad-nixprox";
 
-  # NixOS wants to enable GRUB by default
-  # boot.loader.grub.enable = false;
-  # Enables the generation of /boot/extlinux/extlinux.conf
-  # boot.loader.generic-extlinux-compatible.enable = true;
-
-  # !!! Set to specific linux kernel version
-  # boot.kernelPackages = lib.mkForce pkgs.linuxPackages_latest;
-
-  # Disable ZFS on kernel 6
-  # boot.supportedFilesystems = lib.mkForce [ "vfat" "xfs" "cifs" "ntfs" ];
-
-  # !!! Needed for the virtual console to work on the RPi 3, as the default of 16M doesn't seem to be enough.
-  # If X.org behaves weirdly (I only saw the cursor) then try increasing this to 256M.
-  # On a Raspberry Pi 4 with 4 GB, you should either disable this parameter or increase to at least 64M if you want the USB ports to work.
-  boot.kernelParams = [ "cma=256M" ];
-
-  # File systems configuration for using the installer's partition layout
-  fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-label/NIXOS_SD";
-      fsType = "ext4";
+  boot.loader = {
+    efi = {
+      canTouchEfiVariables = true;
+      # efiSysMountPoint = "/boot/efi"; # ← use the same mount point here.
     };
+    #grub = {
+    #  enable = true;
+    #  efiSupport = true;
+    #  #efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
+    #  device = "nodev";
+    #};
+    systemd-boot.enable = true;
   };
 
+  boot.supportedFilesystems = [ "ntfs" "exfat" ];
+
+  # !!! Set to specific linux kernel version
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_6_8;
+
   # !!! Adding a swap file is optional, but strongly recommended!
-  swapDevices = [{
-    device = "/swapfile";
-    size = 8192;
-  }];
+  # swapDevices = [{
+  #   device = "/swapfile";
+  #   size = 2048;
+  # }];
 
   zramSwap = {
     enable = true;
     memoryPercent = 75;
-    algorithm = "lzo";
   };
 
   # systemPackages
@@ -59,8 +53,7 @@
     nh
     rm-improved
     dust
-    podman-compose
-    podman-tui
+    docker-compose
     gping
   ];
 
@@ -73,17 +66,15 @@
 
   programs.zsh = { enable = true; };
 
-  virtualisation.podman = {
+  virtualisation.docker = {
     enable = true;
-    dockerCompat = true;
   };
 
-  networking.firewall.enable = false;
+  networking.firewall.enable = true;
 
   networking.useDHCP = lib.mkForce true;
 
   hardware.enableRedistributableFirmware = true;
-  networking.wireless.enable = true;
 
   # put your own configuration here, for example ssh keys:
   users.defaultUserShell = pkgs.zsh;

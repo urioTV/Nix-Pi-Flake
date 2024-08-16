@@ -5,14 +5,13 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    raspberry-pi-nix.url = "github:nix-community/raspberry-pi-nix";
 
   };
 
   outputs = { self, nixpkgs, home-manager, raspberry-pi-nix, ... }@inputs:
     let
       lib = nixpkgs.lib;
-      system = "aarch64-linux";
+      system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
       customOverlay = final: prev: { nix = pkgs.lix; };
 
@@ -30,17 +29,13 @@
       (self: (import "${src}/flake.nix").outputs { inherit self nixpkgs; });
     in {
       nixosConfigurations = {
-        konrad-nixpi = lib.nixosSystem {
+        konrad-nixprox = lib.nixosSystem {
           specialArgs = { inherit inputs; };
           inherit system;
           modules = [
             {
               nixpkgs.overlays = [ customOverlay ];
               nixpkgs.config.allowUnfree = true;
-            }
-            {
-              sdImage.compressImage = false;
-              raspberry-pi-nix.board = "bcm2711";
             }
             ./configuration.nix
             ./nix-settings.nix
@@ -51,7 +46,6 @@
               home-manager.useUserService = true;
               home-manager.users.nixos = { imports = [ ./home.nix ]; };
             }
-            raspberry-pi-nix.nixosModules.raspberry-pi
             home-manager.nixosModules.home-manager
           ];
         };

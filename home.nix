@@ -43,7 +43,7 @@
           "git"
         ];
       };
-      shellAliases = { nix = "noglob nix"; };
+      shellAliases = { nix = "noglob nix"; nixos-rebuild = "noglob nixos-rebuild"; };
 
     };
     eza = { enable = true; };
