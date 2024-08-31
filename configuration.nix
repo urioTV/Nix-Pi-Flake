@@ -28,7 +28,7 @@
   boot.supportedFilesystems = [ "ntfs" "exfat" ];
 
   # !!! Set to specific linux kernel version
-  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_6_8;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # !!! Adding a swap file is optional, but strongly recommended!
   # swapDevices = [{

@@ -13,7 +13,10 @@
       lib = nixpkgs.lib;
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      customOverlay = final: prev: { nix = pkgs.lix; };
+      customOverlay = final: prev:
+        {
+          # nix = pkgs.lix;
+        };
 
       home-manager = let
         src = nixpkgs.legacyPackages.${system}.applyPatches {
